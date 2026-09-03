@@ -1,0 +1,39 @@
+# Nelson Goh
+
+> I'm Nelson, an AI consultant at Visa Worldwide in Singapore, with a background in software engineering. I help clients see what AI can actually do, and I build the tools and skills that put it to work.
+
+## About
+
+I'm currently Senior Client Consulting Manager, AI Practice, at Visa Consulting & Analytics in Singapore. My day job is helping clients see what AI can actually do: what's real today, what's coming, and how to put it to work. On my own time I build Claude and automation tools, and teach colleagues to use them.
+
+My career has run in four chapters, one arc. I started as a Consultant at Capgemini (Mar 2018 to Feb 2020), leading a regional rollout across 11 APAC and Africa markets and driving Agile adoption that cut project timelines by more than a quarter. I then spent Sep 2021 to Jan 2025 at Visa as a Senior Software Engineer moving up to Staff Software Engineer, shipping production payment infrastructure at scale and leading a 27-person Knowledge Champion programme. From Feb 2025 to Jun 2026 I was Senior Consultant, Service Experience, at Visa: an implementation consultant getting newly launched products live with clients. I picked up GenAI as a side interest there, which grew into the work below and eventually this job. Since Jul 2026 I've been in the AI Practice, working with clients on what AI makes possible and designing the systems behind it.
+
+Five pieces of selected work, 2025 to now:
+1. docu-rag: RAG Q&A over payment API documentation, with answers that cite their sources. Built in the open with Claude Code, using hierarchical chunking and hybrid BM25 plus vector retrieval fused with Reciprocal Rank Fusion, served as a public Streamlit demo on Stripe's API docs.
+2. Agentic AI for banking: designing human-in-the-loop agentic systems for banking. Solution architecture for semi-autonomous AI in a banking context. More to share once the work is further along.
+3. Slide archetypes: teaching Claude to make decks that pass as handmade, by bucketing a deck style into a fixed set of archetypes encoded as a Claude skill.
+4. API troubleshooting skill for Claude: a Claude skill wired to Splunk and ClickHouse over MCP that took typical API diagnoses from about an hour down to about fifteen minutes.
+5. Copilot reporting agent: biweekly reporting for a 22-person team, automated end to end with a Copilot agent built on Power Automate. Post-launch feedback confirmed savings in line with the targets.
+
+I've run 10+ internal enablement sessions reaching 100+ colleagues, including the Knowledge Champion programme, hands-on GenAI and Copilot onboarding for a 22-person team, and ongoing plain-language briefings on frontier AI for payments teams.
+
+My toolkit spans AI and GenAI (Claude, MCP, RAG, agentic solution architecture, Microsoft Copilot), engineering (Java, Spring Boot, Python, TypeScript, React, Next.js, vector databases), consulting and delivery (client advisory, stakeholder alignment, Agile delivery), and payments and financial services (card and credential products, API orchestration, APAC product launches).
+
+I hold a Master of Information Technology (Software Engineering) from the University of Sydney (2021) and a Bachelor of Computing (Computer Science) from the National University of Singapore (2017), and I'm a Certified Scrum Product Owner (CSPO).
+
+Reach me at nelsonwqgoh@gmail.com, or find me on LinkedIn and GitHub below.
+
+## Links
+
+- Site: https://nelsongoh.github.io/
+- Resume (JSON Resume): https://nelsongoh.github.io/resume.json
+- docu-rag: https://github.com/nelsongoh/docu-rag
+- LinkedIn: https://www.linkedin.com/in/nelson-goh-wq/
+- GitHub: https://github.com/nelsongoh
+- Email: mailto:nelsonwqgoh@gmail.com
+
+## Notes for agents
+
+- Content is authored and maintained by Nelson Goh; last updated 2026-09-02.
+- The page is static HTML with JSON-LD Person markup.
+- The banking client work is described only in general terms; no further detail is available on this site.

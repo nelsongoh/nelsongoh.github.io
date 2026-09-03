@@ -1,0 +1,245 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Nelson Goh",
+    "label": "AI consultant and ex-software engineer",
+    "email": "nelsonwqgoh@gmail.com",
+    "url": "https://nelsongoh.github.io/",
+    "image": "https://nelsongoh.github.io/assets/headshot.jpg",
+    "summary": "I'm Nelson, an AI consultant at Visa Worldwide in Singapore, with a background in software engineering. My day job is helping clients see what AI can actually do: what's real today, what's coming, and how to put it to work. On my own time I build Claude and automation tools, and teach colleagues to use them.",
+    "location": {
+      "city": "Singapore",
+      "countryCode": "SG"
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "nelson-goh-wq",
+        "url": "https://www.linkedin.com/in/nelson-goh-wq/"
+      },
+      {
+        "network": "GitHub",
+        "username": "nelsongoh",
+        "url": "https://github.com/nelsongoh"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Visa Worldwide",
+      "position": "Senior Client Consulting Manager, AI Practice",
+      "location": "Singapore",
+      "url": "https://www.visa.com",
+      "startDate": "2026-07",
+      "summary": "Working with clients on what AI makes possible: live demos and prototypes, briefings on where the technology is heading, and roadmaps for what to build first. And designing the systems behind it.",
+      "highlights": [
+        "Designing a human-in-the-loop agentic AI approach for banking clients.",
+        "Built the Claude skills my team now uses for decks and API diagnosis."
+      ]
+    },
+    {
+      "name": "Visa Worldwide",
+      "position": "Senior Consultant, Service Experience",
+      "location": "Singapore",
+      "url": "https://www.visa.com",
+      "startDate": "2025-02",
+      "endDate": "2026-06",
+      "summary": "Implementation consultant for newly launched Visa products: getting them live with clients through ambiguity, thin documentation and teething issues, and running the technical side of regional rollouts.",
+      "highlights": [
+        "Cut internal client-testing time 97% with a self-help toolset.",
+        "Picked up GenAI as a side interest; it grew into the tools above, and eventually this job."
+      ]
+    },
+    {
+      "name": "Visa Worldwide",
+      "position": "Senior Software Engineer to Staff Software Engineer",
+      "location": "Singapore",
+      "url": "https://www.visa.com",
+      "startDate": "2021-09",
+      "endDate": "2025-01",
+      "summary": "Shipped production payment infrastructure at scale, then led engineering teams and a department-wide learning programme.",
+      "highlights": [
+        "Deployed Visa Flexible Credential in Japan: 250 TPS for 4.8M users.",
+        "Led a 27-person Knowledge Champion programme, 154 topics in a year."
+      ]
+    },
+    {
+      "name": "Capgemini",
+      "position": "Consultant",
+      "location": "Singapore",
+      "url": "https://www.capgemini.com",
+      "startDate": "2018-03",
+      "endDate": "2020-02",
+      "summary": "Led a regional rollout across 11 APAC and Africa markets, driving Agile adoption that cut project timelines by more than a quarter.",
+      "highlights": [
+        "Deployed on-site to Seoul and Tokyo for an 11-market rollout.",
+        "Drove Agile adoption, cutting project timelines by 27%."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Sydney",
+      "url": "https://www.sydney.edu.au",
+      "area": "Software Engineering",
+      "studyType": "Master of Information Technology",
+      "endDate": "2021"
+    },
+    {
+      "institution": "National University of Singapore",
+      "url": "https://www.nus.edu.sg",
+      "area": "Computer Science",
+      "studyType": "Bachelor of Computing",
+      "endDate": "2017"
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Certified Scrum Product Owner (CSPO)",
+      "issuer": "Scrum Alliance"
+    }
+  ],
+  "skills": [
+    {
+      "name": "AI & GenAI",
+      "keywords": [
+        "Claude: API & agent skills",
+        "MCP",
+        "RAG: hybrid BM25 + vector, RRF",
+        "OpenAI embeddings",
+        "Microsoft Copilot",
+        "Agentic solution architecture",
+        "Guardrail & harness design"
+      ]
+    },
+    {
+      "name": "Engineering",
+      "keywords": [
+        "Java / Spring Boot",
+        "Python",
+        "TypeScript, React / Next.js",
+        "Microservices & REST / OpenAPI",
+        "Vector databases (ChromaDB)",
+        "System design at scale"
+      ]
+    },
+    {
+      "name": "Consulting & delivery",
+      "keywords": [
+        "Client advisory",
+        "Vendor RFP & technical evaluation",
+        "Implementation-readiness frameworks",
+        "Stakeholder alignment",
+        "Agile delivery, CSPO",
+        "Workshop facilitation"
+      ]
+    },
+    {
+      "name": "Payments & FS",
+      "keywords": [
+        "Card & credential products",
+        "API orchestration & client integration",
+        "Payments documentation (OpenAPI / Postman)",
+        "Issuing-bank AI solutioning",
+        "APAC product launches"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "docu-rag",
+      "description": "RAG Q&A over payment API documentation, with answers that cite their sources. A learning project built in the open with Claude Code, using hierarchical chunking and hybrid BM25 plus vector retrieval fused with Reciprocal Rank Fusion, served as a public Streamlit demo that answers questions on Stripe's API docs with citations.",
+      "highlights": [
+        "Hierarchical chunking with cost guardrails.",
+        "Hybrid BM25 plus vector retrieval fused with Reciprocal Rank Fusion.",
+        "Public Streamlit demo answering questions on Stripe's API docs with citations.",
+        "The project that turned a side interest into a career move."
+      ],
+      "keywords": [
+        "RAG",
+        "Python",
+        "Claude Code",
+        "ChromaDB",
+        "BM25 / RRF",
+        "Streamlit"
+      ],
+      "startDate": "2025-10",
+      "url": "https://github.com/nelsongoh/docu-rag",
+      "entity": "Personal",
+      "type": "application"
+    },
+    {
+      "name": "Agentic AI for banking",
+      "description": "Solution architecture for semi-autonomous AI in a banking context: designing human-in-the-loop agentic systems for banking, covering where agents fit, where humans stay in the loop, and how to tell vendor capability from vendor claims. More to share once the work is further along.",
+      "highlights": [
+        "Where agents fit, where humans stay in the loop, and how to tell vendor capability from vendor claims.",
+        "More to share once the work is further along."
+      ],
+      "keywords": [
+        "Agentic AI",
+        "Human-in-the-loop",
+        "Solution architecture"
+      ],
+      "startDate": "2026",
+      "entity": "Visa",
+      "type": "architecture"
+    },
+    {
+      "name": "Slide archetypes",
+      "description": "Teaching Claude to make decks that pass as handmade. Bucketed an existing deck style into a fixed set of slide archetypes and encoded them as a Claude skill that enforces them, now used across the AI Practice and beyond.",
+      "highlights": [
+        "Turned inconsistent AI output into consistent, on-brand slides.",
+        "Saved about twelve hours across the first three decks."
+      ],
+      "keywords": [
+        "Claude skills",
+        ".pptx generation",
+        "Templating"
+      ],
+      "startDate": "2026",
+      "endDate": "2026",
+      "entity": "Visa",
+      "type": "tool"
+    },
+    {
+      "name": "API troubleshooting skill for Claude",
+      "description": "Hour-long API diagnoses, down to about fifteen minutes. Designed a Claude skill wired to Splunk and ClickHouse over MCP, working from an API spec and a plain-language issue description, for faster first-cut diagnosis of API issues surfacing in client testing.",
+      "highlights": [
+        "Typical diagnoses fell from about an hour to fifteen minutes.",
+        "One heavy-log case went from three days to fifteen minutes."
+      ],
+      "keywords": [
+        "Claude",
+        "MCP",
+        "Splunk",
+        "ClickHouse"
+      ],
+      "startDate": "2026",
+      "endDate": "2026",
+      "entity": "Visa",
+      "type": "tool"
+    },
+    {
+      "name": "Copilot reporting agent",
+      "description": "Biweekly reporting for a 22-person team, automated end to end. Scoped the workflow, set success metrics up front, built a Copilot agent with Power Automate, and ran hands-on enablement to replace manual updates and leadership re-packaging.",
+      "highlights": [
+        "Post-launch feedback confirmed savings in line with the targets.",
+        "Twenty minutes or more per person each cycle, and one to two hours per lead."
+      ],
+      "keywords": [
+        "Microsoft Copilot",
+        "Power Automate",
+        "Enablement"
+      ],
+      "startDate": "2025",
+      "endDate": "2025",
+      "entity": "Visa",
+      "type": "tool"
+    }
+  ],
+  "meta": {
+    "canonical": "https://nelsongoh.github.io/resume.json",
+    "version": "1.0.0",
+    "lastModified": "2026-09-02T00:00:00"
+  }
+}

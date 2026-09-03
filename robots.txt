@@ -1,0 +1,5 @@
+# nelsongoh.github.io
+User-agent: *
+Allow: /
+
+Sitemap: https://nelsongoh.github.io/sitemap.xml

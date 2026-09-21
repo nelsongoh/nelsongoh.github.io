@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; font-src 'self'; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; connect-src https://personal-brand-analytics.personal-brand-analytics-worker.workers.dev; style-src 'self'; font-src 'self'; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+  <script src="analytics.js" defer></script>
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#121110">
@@ -384,6 +385,15 @@
   </section>
 
   <footer class="foot">
+    <div class="visitor-counter mono" data-visitor-counter hidden>
+      <span><strong data-unique-visitors></strong> unique visitors</span>
+      <span><strong data-total-visits></strong> total visits</span>
+      <span>Since 22 Sep 2026</span>
+      <details>
+        <summary>About the count</summary>
+        <p>A rough count of browsers and visits, using random IDs. One visit per tab session. Country totals are approximate; IP addresses are not stored. Privacy opt-outs are respected.</p>
+      </details>
+    </div>
     <span class="mono">© 2026 Nelson Goh · Singapore</span>
     <div class="foot-meta mono">
       <span>Static HTML</span>

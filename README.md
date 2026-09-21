@@ -1,6 +1,6 @@
 # nelsongoh.github.io
 
-Personal landing page and visual resume for Nelson Goh. Static HTML, no build step, no JavaScript, no third-party requests.
+Personal landing page and visual resume for Nelson Goh. Static HTML hosted only on GitHub Pages, with no build step. A small self-hosted script calls a separately hosted Cloudflare Worker for visitor counts.
 
 ## Deploy to GitHub Pages
 
@@ -38,9 +38,9 @@ If you later use a custom domain, add a `CNAME` file containing the bare domain,
 
 GitHub Pages cannot set custom response headers, so the protections live in the document and in what the site refuses to do.
 
-- **No JavaScript at all.** The ticker and the reveal are CSS animations. Nothing to inject into, nothing to update.
-- **Content Security Policy via meta tag.** `default-src 'none'` with `style-src`, `font-src`, `img-src` and `manifest-src` limited to `'self'`, `base-uri 'none'`, `form-action 'none'`, `upgrade-insecure-requests`. Any script, frame, or third-party fetch is blocked by the browser, including anything an extension or a stray copy-paste might add later. JSON-LD is a data block, not executable, so the CSP does not affect it. `frame-ancestors` cannot be set from a meta tag, so clickjacking protection is not available; the site has no forms or state, so there is nothing to hijack.
-- **No third-party requests.** Fonts are self-hosted, so visitors' IP addresses are not sent to Google Fonts. No analytics, no cookies, no embeds. If analytics are ever wanted, add a cookieless provider and extend `connect-src` and `script-src` accordingly.
+- **Small self-hosted analytics script.** `analytics.js` records one visit per tab session and estimates unique browsers using a random ID in localStorage. Refreshes read the totals; retries reuse a visit ID so the backend can deduplicate them. With blocked storage or Do Not Track / Global Privacy Control, the script only reads totals. Local previews do not contact the backend. The ticker and reveals remain CSS animations.
+- **Content Security Policy via meta tag.** `default-src 'none'`; scripts, styles, fonts, images and manifests are limited to `'self'`. `connect-src` permits only the configured counter endpoint. Inline executable scripts remain blocked. `base-uri 'none'`, `form-action 'none'` and `upgrade-insecure-requests` remain enabled. `frame-ancestors` cannot be set from a meta tag.
+- **Own counter backend.** A Cloudflare Worker and private D1 database store aggregate counts and random visitor/session IDs. Country-level visit estimates are stored separately as private aggregates, without links to those IDs. No Firebase or Google Analytics SDK is loaded. The application does not store IP addresses, referrers or browser fingerprints; the infrastructure provider still processes request metadata. Fonts remain self-hosted. Cloudflare hosts only the counter API and database, never the HTML site.
 - **Referrer policy** `strict-origin-when-cross-origin`: outbound clicks reveal only the origin, never a path.
 - **External links** carry `rel="noopener"` (and `rel="me"` for identity links, which lets LinkedIn and GitHub be verified as the same person by IndieWeb tooling).
 - **HTTPS** is enforced by GitHub Pages; `*.github.io` is on the HSTS preload list, so browsers never try plain HTTP.
@@ -52,7 +52,7 @@ Repository-side hygiene, which matters more than any header for a static site:
 - Turn on two-factor authentication for the GitHub account and use a passkey or hardware key.
 - Keep the deployment on "Deploy from a branch". Do not add a GitHub Actions workflow or a Node build: every dependency would be a supply-chain surface for a site that needs none.
 - Protect `main` (require a pull request or at least block force pushes), and review any pull request from a stranger before merging. Dependabot is unnecessary because there are no dependencies.
-- The CV is deliberately not on the site; it lives in `ai-workshop/cv/` and is shared as a PDF on request. Never commit it, or the design folder's notes, to the public repository. Only this folder goes public.
+- The CV is deliberately not on the site; it lives in `personal-brand/cv/` and is shared as a PDF on request. Never commit it, or the design folder's notes, to the public repository. Only this folder goes public.
 
 ## Local preview
 

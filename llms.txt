@@ -34,6 +34,7 @@ Reach me at nelsonwqgoh@gmail.com, or find me on LinkedIn and GitHub below.
 
 ## Notes for agents
 
-- Content is authored and maintained by Nelson Goh; last updated 2026-09-02.
-- The page is static HTML with JSON-LD Person markup.
+- Content is authored and maintained by Nelson Goh; last updated 2026-09-22.
+- The page is static HTML hosted on GitHub Pages, with JSON-LD ProfilePage and Person markup.
+- A small self-hosted script displays total visits and estimated unique browsers since 22 September 2026. The counter API and database run separately on Cloudflare. Country-level visit estimates are private aggregates; browser privacy opt-outs are respected.
 - The banking client work is described only in general terms; no further detail is available on this site.

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Learn how retrieval-augmented generation (RAG) finds information in documents and uses it to answer a question, with a simple payments example.">
+  <title>How RAG works | docu-rag</title>
+  <link rel="canonical" href="https://nelsongoh.github.io/projects/docu-rag/">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <script>document.documentElement.classList.add('js-pending');</script>
+  <link rel="stylesheet" href="story.css">
+  <script src="story.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#story">Skip to the story</a>
+  <header class="topbar wrap">
+    <a class="back" href="../../index.html" aria-label="Back to Nelson Goh home page"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></svg>Nelson Goh</a>
+    <span class="project-mark"><i></i> Side project / docu-rag</span>
+    <a class="repo" href="https://github.com/nelsongoh/docu-rag">View GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="story">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">docu-rag · A visual introduction to RAG</p>
+        <h1 id="hero-title">How AI answers<br><em>from documents.</em></h1>
+        <p class="hero-lede">I built docu-rag to learn how an AI can answer questions using information from documents. It uses a method called <strong>retrieval-augmented generation (RAG)</strong>: find relevant information first, then give it to the AI to help it write an answer.</p>
+        <div class="intro-context"><p><strong>Why payments?</strong> Questions about payments often have specific, documented steps, so we can check an AI’s answer against the instructions. That makes payments a useful example for learning RAG. docu-rag uses Stripe’s payments documentation; this walkthrough uses a short, invented help page to keep the example easy to follow.</p><p>You do not need to know how payments or AI work. We will prepare that page for searching, then use it to answer the question below.</p></div>
+      </div>
+      <figure class="hero-art">
+        <img src="assets/document-constellation.png" alt="Conceptual illustration of document fragments connected in a constellation">
+        <figcaption>Conceptual illustration, not an application screenshot</figcaption>
+      </figure>
+      <div class="question-strip" aria-label="Example question"><span>Our example question</span><strong>“How do I issue a partial refund?”</strong><small>Illustrative scenario</small></div>
+    </section>
+
+    <nav class="chapter-nav" aria-label="Story chapters"><div class="wrap chapter-inner"><span class="chapter-label">Follow the example</span><ol>
+      <li><a href="#ask" data-jump="0"><span>01</span><b>The task</b></a></li><li><a href="#collect" data-jump="1"><span>02</span><b>Read a page</b></a></li><li><a href="#split" data-jump="2"><span>03</span><b>Split text</b></a></li><li><a href="#index" data-jump="3"><span>04</span><b>Make searchable</b></a></li><li><a href="#retrieve" data-jump="4"><span>05</span><b>Find passages</b></a></li><li><a href="#assemble" data-jump="5"><span>06</span><b>Ask the AI</b></a></li><li><a href="#answer" data-jump="6"><span>07</span><b>Answer</b></a></li>
+    </ol></div></nav>
+
+    <section class="pipeline wrap" aria-label="How docu-rag works">
+      <figure class="visual-stage" data-stage="0" aria-labelledby="visual-caption">
+        <figcaption id="visual-caption"><span><i></i> Worked example</span><b id="stage-title">A question about payments</b><button class="replay" type="button" aria-label="Replay this stage animation"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>Replay</button></figcaption>
+        <div class="stage-canvas" aria-live="polite">
+          <svg class="stage-wires" aria-hidden="true" viewBox="0 0 1000 650" preserveAspectRatio="none"><path class="wire wire-a" d="M110 180 C330 90,590 120,870 220"/><path class="wire wire-b" d="M100 470 C350 570,600 520,900 380"/><path class="wire wire-c" d="M170 320 C390 270,590 300,820 315"/></svg>
+
+          <section class="scene scene-question" data-scene="0" aria-label="The example question">
+            <div class="question-signal reveal-piece"><svg class="scene-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.5 2.5 0 1 1 3.7 2.2c-1 .5-1.4 1-1.4 2M12 17h.01"/></svg></div>
+            <p class="scene-kicker reveal-piece">Imagine asking an assistant about a payment</p><p class="stage-question reveal-piece">How do I issue a<br><mark>partial refund?</mark></p>
+            <div class="question-path reveal-piece"><span>Ask a question</span><i></i><span>Find information</span><i></i><span>Write an answer</span></div>
+          </section>
+
+          <section class="scene scene-document" data-scene="1" aria-label="Example payments help webpage">
+            <div class="library-shell reveal-piece">
+              <aside class="doc-nav"><div class="app-label"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h4"/></svg>Payments help</div><span>Overview</span><span class="selected">Refunds</span><span>Disputes</span><span>Accounts</span></aside>
+              <article class="doc-page"><p class="browser-address">Example payments help website</p><div class="doc-crumb">Payments / Refunds</div><h3>Partial refunds</h3><p>A partial refund returns some of the money from an earlier payment.</p>
+                <div class="source-passage source-whole"><span>¶</span><p>Open the original charge and choose the refund action. Enter the amount to return. Review the refund amount before submitting.</p></div>
+                <p class="doc-footnote">Illustrative documentation written for this walkthrough.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="scene scene-chunks" data-scene="2" aria-label="The page split into heading-aware chunks">
+            <header class="scene-heading reveal-piece"><svg class="scene-icon small" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 4h7v7H4zm9 9h7v7h-7zM13 4h7M4 15h7"/></svg><div><span>Two passages from the same page</span><b>Keep the page headings with each passage</b></div></header>
+            <div class="chunk-deck">
+              <article class="chunk-card chunk-18 reveal-piece"><div class="chunk-top"><span>Passage 1</span><small>From step 2</small></div><b>Payments › Refunds › Partial refunds</b><p>Open the original charge and choose the refund action. <u>Enter the amount to return.</u></p></article>
+              <div class="overlap-note reveal-piece"><i></i><span>This sentence appears in both</span><i></i></div>
+              <article class="chunk-card chunk-19 reveal-piece"><div class="chunk-top"><span>Passage 2</span><small>From step 2</small></div><b>Payments › Refunds › Partial refunds</b><p><u>Enter the amount to return.</u> Review the refund amount before submitting.</p></article>
+            </div>
+          </section>
+
+          <section class="scene scene-vector" data-scene="3" aria-label="A schematic similarity map of passage embeddings">
+            <header class="scene-heading reveal-piece"><svg class="scene-icon small" aria-hidden="true" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="10" r="2"/><circle cx="13" cy="19" r="2"/><path d="m7 11 3.5-4.5m3.4-.6 3.2 2.7m.3 3-3.2 5.7M7 13l4.4 4.5"/></svg><div><span>An embedding model produces these numbers</span><b>Similar meanings can have similar number patterns</b></div></header>
+            <div class="vector-chip chip-18 reveal-piece"><span>Passage 1</span><code>[0.12, −0.38, 0.71, …]</code></div><div class="vector-chip chip-19 reveal-piece"><span>Passage 2</span><code>[0.09, −0.41, 0.68, …]</code></div>
+            <div class="similarity-map reveal-piece"><span class="cluster-label refund-label">refund actions</span><span class="cluster-label account-label">account access</span>
+              <button class="embedding-point amber p18" type="button" data-excerpt="18" aria-label="Show Passage 1"><span>1</span></button><button class="embedding-point teal p19" type="button" data-excerpt="19" aria-label="Show Passage 2"><span>2</span></button><span class="embedding-point soft p3" aria-hidden="true"></span><span class="embedding-point soft p4" aria-hidden="true"></span><span class="embedding-point soft p5" aria-hidden="true"></span><span class="embedding-point soft p6" aria-hidden="true"></span>
+            </div>
+            <div class="vector-readout" role="status"><b>Select point 1 or 2</b><span>to read the passage it represents</span></div><p class="schematic-label">Illustration only: these numbers and positions are made up</p>
+          </section>
+
+          <section class="scene scene-retrieval" data-scene="4" aria-label="Hybrid retrieval with two search lanes">
+            <div class="query-node reveal-piece"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><span>partial refund?</span></div>
+            <div class="search-lanes"><section class="search-lane semantic reveal-piece"><header><svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="12" r="2"/><path d="m7 11 3.5-4m3 0 4 4"/></svg><span>Search by meaning</span><b>Compare the embeddings</b></header><div class="result chosen"><small>01</small><p>Open the original charge and choose the refund action. Enter the amount to return.</p><em>Passage 1</em></div><div class="result"><small>02</small><p>Refund a captured payment</p></div></section>
+              <section class="search-lane lexical reveal-piece"><header><svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/></svg><span>Search by words</span><b>Look for matching terms</b></header><div class="result chosen"><small>01</small><p>Enter the amount to return. Review the refund amount before submitting.</p><em>Passage 2</em></div><div class="result"><small>02</small><p>Refund status</p></div></section></div>
+            <div class="merge-path reveal-piece"><i></i><span>Combine the search results</span><i></i></div><div class="shortlist reveal-piece"><b>Selected for the answer</b><span>Passage 1</span><span>Passage 2</span></div>
+          </section>
+
+          <section class="scene scene-prompt" data-scene="5" aria-label="The assembled prompt">
+            <div class="prompt-shell reveal-piece"><header><svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h5"/></svg><span>The message sent to the AI</span><small>3 parts</small></header>
+              <section class="prompt-block instruction reveal-piece"><span>01 / Instruction</span><p>Answer only from the supplied context. Cite the source.</p></section><section class="prompt-block question reveal-piece"><span>02 / Question</span><p>How do I issue a partial refund?</p></section><section class="prompt-block context reveal-piece"><span>03 / Passages found in step 5</span><b>Payments help page › Partial refunds</b><p>Open the original charge and choose the refund action. Enter the amount to return. Review the refund amount before submitting.</p></section>
+            </div><p class="send-label reveal-piece"><i></i> These three parts form the prompt sent to the AI <i></i></p>
+          </section>
+
+          <section class="scene scene-answer" data-scene="6" aria-label="An illustrative cited answer">
+            <article class="answer-window reveal-piece"><header><svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16v12H8l-4 3z"/><path d="M8 9h8M8 13h5"/></svg><span>An answer using the help page</span><small>Illustrative, not live output</small></header><div class="answer-copy"><p>Open the original charge and choose the refund action. Enter the amount to return, then review the refund amount before submitting. <button class="citation-button" type="button" aria-expanded="false" aria-controls="citation-source">[1]</button></p></div><div class="citation-source" id="citation-source" hidden><span class="source-label">[1] Payments help page › Partial refunds</span><p><mark>Open the original charge and choose the refund action. Enter the amount to return.</mark> <mark class="teal-mark">Review the refund amount before submitting.</mark></p></div></article>
+            <noscript><p class="nojs-source"><b>[1] Payments help page › Partial refunds</b><br>Open the original charge and choose the refund action. Enter the amount to return. Review the refund amount before submitting.</p></noscript>
+            <div class="evidence-trace reveal-piece"><span>The answer</span><i></i><span>Its evidence</span><i></i><span>The help page</span></div>
+          </section>
+
+        </div>
+        <div class="stage-progress" aria-hidden="true"><i></i><span>01 / 07</span></div>
+      </figure>
+
+      <div class="narrative">
+        <section class="step" id="ask" data-step="0"><p class="phase">The task</p><span class="step-no">01</span><h2>Start with a question about a payment.</h2><p>Imagine a shop owner wants to return part of a customer’s payment. They ask, “How do I issue a partial refund?”</p><p>The AI needs the relevant instructions to answer reliably. RAG finds those instructions and includes them in the message sent to the AI.</p><aside><b>First, prepare the information</b>Steps 2–4 happen before questions are answered. Once the pages are prepared, steps 5–7 run for each question.</aside><div class="step-slot"></div></section>
+        <section class="step" id="collect" data-step="1"><p class="phase">Prepare the information</p><span class="step-no">02</span><h2>Read a payments help webpage.</h2><p>The panel shows a simplified <strong>webpage of payment instructions</strong>. The navigation says “Payments / Refunds”, and the section heading is “Partial refunds”.</p><p>docu-rag extracts the page’s text and keeps its headings and source link. Next, it breaks the text into smaller pieces that can be searched.</p><aside><b>Our sample page</b>The instructions are invented for this explanation. The real project collects Stripe documentation webpages.</aside><div class="step-slot"></div></section>
+        <section class="step" id="split" data-step="2"><p class="phase">Prepare the information</p><span class="step-no">03</span><h2>Split the page into smaller passages.</h2><p>Each small piece of text is called a <strong>chunk</strong>. We will call the two pieces here <strong>Passage 1</strong> and <strong>Passage 2</strong>. These labels simply help you follow them through the example.</p><p>Each passage keeps the headings from step 2: “Payments → Refunds → Partial refunds”. That tells us where it came from. One sentence appears in both passages so the split does not lose the connection between the instructions.</p><aside><b>Next</b>We make these passages searchable by meaning, so the question does not have to use exactly the same words.</aside><div class="step-slot"></div></section>
+        <section class="step" id="index" data-step="3"><p class="phase">Prepare the information</p><span class="step-no">04</span><h2>Create a number pattern for each passage.</h2><p>docu-rag sends each passage to an <strong>embedding model</strong> from OpenAI. This model returns a list of numbers called an <strong>embedding</strong>. Text with similar meanings tends to produce similar number patterns.</p><p>These number patterns are called <strong>vectors</strong>. A <strong>vector database</strong> is designed to store them and search for similar patterns, while keeping each one linked to its original passage and source details. docu-rag uses <strong>ChromaDB</strong> as its vector database. The map illustrates similarity; select a point to read its passage.</p><aside><b>The information is ready</b>This prepares a search index. It does not train the answering AI on the page. Next, we return to the shop owner’s question.</aside><div class="step-slot"></div></section>
+        <section class="step" id="retrieve" data-step="4"><p class="phase">Answer the question</p><span class="step-no">05</span><h2>Find passages that could answer it.</h2><p>Now when the shop owner asks about a partial refund, docu-rag uses the same embedding model to turn the question into numbers, then looks for passages with similar number patterns (<strong>vector search</strong>).</p><p>It also searches for matching words in the text and headings (<strong>BM25</strong>). It combines the two result rankings (<strong>Reciprocal Rank Fusion, or RRF</strong>) and selects passages to give to the answering AI.</p><details><summary>The technical names</summary><p>The meaning search compares embeddings. The word search uses BM25. Reciprocal Rank Fusion combines their rankings. This walkthrough shows illustrative results, not measured search scores.</p></details><div class="step-slot"></div></section>
+        <section class="step" id="assemble" data-step="5"><p class="phase">Answer the question</p><span class="step-no">06</span><h2>Send the question and passages to the AI.</h2><p>Finding passages and writing an answer are separate jobs. docu-rag now creates a <strong>prompt</strong>: the message sent to the AI that writes the answer.</p><p>The message contains instructions, the original question, and the passages found in step 5. The AI can use this information when answering, rather than relying only on what it learned during training.</p><aside><b>What RAG adds</b>The retrieved passages are the extra information added to the question. The full collection of documents is not sent with every question.</aside><div class="step-slot"></div></section>
+        <section class="step" id="answer" data-step="6"><p class="phase">Answer the question</p><span class="step-no">07</span><h2>Read the answer and check the source.</h2><p>The AI uses the supplied passages to write an answer. A numbered <strong>citation</strong>, like [1], points to the source behind it.</p><p>Select [1] to compare this sample answer with the help page we started with. You can trace the information all the way from the original page to the answer.</p><aside><b>What this does not guarantee</b>A search can miss useful information, the page can be wrong, or the AI can misread it. Citations help us check an answer; they do not prove it is correct.</aside><div class="step-slot"></div></section>
+      </div>
+    </section>
+
+    <section class="project-note wrap"><p class="eyebrow">Project note</p><div><h2>Why I built docu-rag.</h2><p>I wanted to understand how to search documents, give an AI useful information, and let a reader check where an answer came from. docu-rag is my learning project, built with Claude Code. The scenes above explain its approach using a simplified example; they are not a live run of the app.</p><p>This version uses <strong>Anthropic’s Claude</strong> to write answers. The same approach can be adapted to most other <strong>large language models (LLMs)</strong> by changing the model integration.</p></div><a class="github-button" href="https://github.com/nelsongoh/docu-rag">Explore the code <span aria-hidden="true">↗</span></a></section>
+  </main>
+  <footer class="footer wrap"><span>Nelson Goh</span><span>docu-rag / 2026</span><a href="#story">Back to top ↑</a></footer>
+</body>
+</html>
